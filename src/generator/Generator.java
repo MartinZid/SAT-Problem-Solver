@@ -36,8 +36,7 @@ public class Generator {
             // for each line run solve given problem
             stream.forEach(line ->
             {
-                try
-                {
+                try {
                     parseLine(line, path);
                 } catch (IOException ex)
                 {
@@ -49,22 +48,31 @@ public class Generator {
         }
     }
 
+    /**
+     * Parses line a writes to output file.
+     * @param line
+     * @param path
+     * @throws IOException 
+     */
     private void parseLine(String line, Path path) throws IOException
     {
         if(eof)
             return;
         String [] data = line.split(" ");
-        if(data[0].equals("p")) 
+        if(data[0].equals("p")) //Metadata
         {
             parseMetadata(line, path);
             return;
         }
-        if(data[0].equals("c"))
+        if(data[0].equals("c")) // Comment
             return;
-        if(data[0].equals("%"))
-            eof = true;
-        try
+        if(data[0].equals("%")) // EOF
         {
+            eof = true;
+            return;
+        }
+        
+        try { //write line to output file
             Files.write(path, line.trim().concat("\n").getBytes(), StandardOpenOption.APPEND);
         } catch (IOException ex)
         {
@@ -72,6 +80,12 @@ public class Generator {
         }
     }
 
+    /**
+     * Get clauses count and generates random weight for each literal.
+     * @param line
+     * @param path
+     * @throws IOException 
+     */
     private void parseMetadata(String line, Path path) throws IOException
     {
         String[] data = line.split(" ");

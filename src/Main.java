@@ -3,6 +3,7 @@ import generator.Generator;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.stream.Stream;
 import solver.SATSolver;
 import solver.parser.Parser;
@@ -17,7 +18,8 @@ public class Main
     private static void generate() throws IOException
     {
         Generator generator = new Generator();
-        generator.generate("./input/uf20-91(allSAT)/uf20-01.cnf"); 
+        //generator.generate("./input/uf20-91(allSAT)/uf20-01.cnf"); 
+        generator.generate("./input/example.cnf");
     }
     
     private static void solve()
@@ -32,7 +34,7 @@ public class Main
             System.out.println("Input file error! " + ex);
         }
         System.out.println(parser.getProblem().toString());
-        solver.solve();
+        solver.solve(parser.getProblem());
     }
     
     /**

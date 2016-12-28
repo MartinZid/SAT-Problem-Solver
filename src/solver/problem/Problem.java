@@ -3,16 +3,44 @@ package solver.problem;
 import java.util.ArrayList;
 
 /**
- *
+ * Problem with clauses with AND (.).
  * @author Martin
  */
 public class Problem {
 
-    private ArrayList<Clause> clauses = new ArrayList<>();
+    private ArrayList<Clause> clauses;   
+    private final ArrayList<Integer> weights;
+    
+    public Problem(ArrayList<Integer> weights)
+    {
+        this.weights = weights;
+        this.clauses = new ArrayList<>();
+    }
     
     public void addClause(Clause c)
     {
         clauses.add(c);
+    }
+    
+    public boolean isSat(ArrayList<Boolean> configuration)
+    {
+        for(Clause c: clauses)
+        {
+            if(!c.isTRUE(configuration))
+                return false;
+        }
+        return true;
+    }
+    
+    
+    public int getN()
+    {
+        return weights.size();
+    }
+    
+    public int getWeight(int i)
+    {
+        return weights.get(i);
     }
     
     @Override
@@ -25,5 +53,4 @@ public class Problem {
         }
         return problem;
     }
-
 }
