@@ -29,7 +29,7 @@ public class Generator {
             Files.createFile(Paths.get(filePath+ "_w"));
         } catch (IOException ex) {
             Files.write(path, ("").getBytes());
-            System.out.println("File already existed. Proceeding...");
+            System.out.println("File " + filePath + "_w already existed. Proceeding...");
         }
         try (Stream<String> stream = Files.lines(
                 Paths.get(filePath))) {

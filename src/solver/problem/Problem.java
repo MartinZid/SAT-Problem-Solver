@@ -22,16 +22,21 @@ public class Problem {
         clauses.add(c);
     }
     
-    public boolean isSat(ArrayList<Boolean> configuration)
+    public double clausesTrue(ArrayList<Boolean> configuration)
     {
+        int clausesTrue = 0;
         for(Clause c: clauses)
         {
-            if(!c.isTRUE(configuration))
-                return false;
+            if(c.isTRUE(configuration))
+                clausesTrue++;
         }
-        return true;
+        return (double)clausesTrue/clauses.size();
     }
     
+    public boolean isSat(ArrayList<Boolean> configuration)
+    {
+        return clausesTrue(configuration) == 1;
+    }
     
     public int getN()
     {

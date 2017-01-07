@@ -1,5 +1,6 @@
 package solver;
 
+import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import solver.problem.Problem;
 
@@ -21,6 +22,9 @@ public class SATSolver {
     private double temperature;    
     private Problem problem;
     
+    private int counter = 0;
+    private ArrayList<Result> results = new ArrayList<>();
+    
     public SATSolver(int startT, double a, double finalT, 
             int equilibrium)
     {
@@ -39,6 +43,7 @@ public class SATSolver {
     public int solve(Problem problem)
     {
         this.problem = problem;
+        //System.out.println(countTstart());
         bestSolution = new State(problem);
         state = new State(problem);
         
@@ -47,16 +52,19 @@ public class SATSolver {
             // stay on this temperature for a while (equilibrium)
             for(int i = 0; equilibrium(i); i++)
             {
-                System.out.println(temperature + "\t" + state.weight());
+                counter++;
+                
+                results.add(new Result(temperature, state.weight()));
                 // get (new) state
                 state = tryState();
                 // found better solution? Save it!
-                if(state.better(bestSolution))
+                if(state.better(bestSolution) && state.isSAT())
                     bestSolution = state;
             }
             temperature = cool();
         }
-        System.out.println(bestSolution.weight());
+        System.out.println("Counter " + counter);
+        //System.out.println(bestSolution.weight());
         return bestSolution.weight();        
         
     }
@@ -65,13 +73,10 @@ public class SATSolver {
     {
         int position;
         State newState;
-        do {
-            position = ThreadLocalRandom.current().nextInt(0, problem.getN());
-            newState = new State(state, problem);
-            // get new configuration (switch one bit)
-            newState.toggleBit(position);
-            System.out.println(newState.isSAT());
-        } while(!newState.isSAT());
+        position = ThreadLocalRandom.current().nextInt(0, problem.getN());
+        newState = new State(state, problem);
+        // get new configuration (switch one bit)
+        newState.toggleBit(position);
         
         if(newState.better(state))
             return newState;
@@ -98,5 +103,22 @@ public class SATSolver {
     private double cool()
     {
         return temperature * a;
-    }    
+    }  
+    
+    private double countTstart()
+    {
+        int weight = 0;
+        for(int i = 0; i < problem.getN(); i++)
+        {
+            weight += problem.getWeight(i);
+        }
+        double avgWeight = (double)weight/problem.getN();
+        return -avgWeight/Math.log(0.5);
+        
+    }
+    
+    public ArrayList<Result> getResults()
+    {
+        return results;
+    }
 }

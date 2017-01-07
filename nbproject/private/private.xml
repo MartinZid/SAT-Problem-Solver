@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Martin/Documents/NetBeansProjects/SAT/src/generator/Generator.java</file>
             <file>file:/C:/Users/Martin/Documents/NetBeansProjects/SAT/src/solver/State.java</file>
-            <file>file:/C:/Users/Martin/Documents/NetBeansProjects/SAT/src/solver/problem/Literal.java</file>
+            <file>file:/C:/Users/Martin/Documents/NetBeansProjects/SAT/src/solver/parser/Parser.java</file>
+            <file>file:/C:/Users/Martin/Documents/NetBeansProjects/SAT/src/solver/Result.java</file>
             <file>file:/C:/Users/Martin/Documents/NetBeansProjects/SAT/src/solver/SATSolver.java</file>
             <file>file:/C:/Users/Martin/Documents/NetBeansProjects/SAT/src/solver/problem/Problem.java</file>
-            <file>file:/C:/Users/Martin/Documents/NetBeansProjects/SAT/src/solver/problem/Clause.java</file>
             <file>file:/C:/Users/Martin/Documents/NetBeansProjects/SAT/src/Main.java</file>
         </group>
     </open-files>

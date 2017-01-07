@@ -34,7 +34,11 @@ class State {
 
     public boolean better(State state)
     {
-        return weight() > state.weight();
+        double clausesTrueThis = problem.clausesTrue(configuration);
+        double clausesTrueState = state.problem.clausesTrue(configuration);
+        if(clausesTrueThis != clausesTrueState)
+            return clausesTrueThis > clausesTrueState;
+        return (weight() > state.weight());
     }
 
     public int weight()
@@ -47,6 +51,23 @@ class State {
         }
         return weight;
     }
+//    public boolean better(State state)
+//    {
+//        return weight() > state.weight();
+//    }    
+//    
+//    public int weight()
+//    {
+//        int weight = 0;
+//        for(int i = 0; i < configuration.size(); i++)
+//        {
+//            if(configuration.get(i))
+//                weight += problem.getWeight(i);
+//        }
+//        double clausesTrue = problem.clausesTrue(configuration) == 1?
+//                2: problem.clausesTrue(configuration);
+//        return (int)(weight*clausesTrue);
+//    }    
 
     public void toggleBit(int position)
     {
@@ -58,4 +79,9 @@ class State {
         return problem.isSat(configuration);
     }
 
+    public double clausesTrue()
+    {
+        return problem.clausesTrue(configuration);
+    }
+    
 }
