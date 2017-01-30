@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import solver.problem.Problem;
 
 /**
- *
+ * SAT Solver.
  * @author Martin
  */
 public class SATSolver {
@@ -21,6 +21,9 @@ public class SATSolver {
     private State state;
     private double temperature;    
     private Problem problem;
+    
+    // advatage coefficient
+    private final int coef = 6;
     
     private int counter = 0;
     private ArrayList<Result> results = new ArrayList<>();
@@ -38,14 +41,13 @@ public class SATSolver {
     /**
      * Solve knapsack problem by simulated annealing.
      * @param problem
-     * @return 
+     * @return State
      */
     public int solve(Problem problem)
     {
         this.problem = problem;
-        //System.out.println(countTstart());
-        bestSolution = new State(problem);
-        state = new State(problem);
+        bestSolution = new State(problem, coef);
+        state = new State(problem, coef);
         
         while(!frozen())
         {
@@ -53,9 +55,6 @@ public class SATSolver {
             for(int i = 0; equilibrium(i); i++)
             {
                 counter++;
-                
-                results.add(new Result(temperature, state.weight()));
-                // get (new) state
                 state = tryState();
                 // found better solution? Save it!
                 if(state.better(bestSolution) && state.isSAT())
@@ -64,8 +63,7 @@ public class SATSolver {
             temperature = cool();
         }
         System.out.println("Counter " + counter);
-        //System.out.println(bestSolution.weight());
-        return bestSolution.weight();        
+        return bestSolution.weight()/coef;        
         
     }
 
@@ -105,6 +103,10 @@ public class SATSolver {
         return temperature * a;
     }  
     
+    /**
+     * Counts ideal starting temperature.
+     * @return temperature
+     */
     private double countTstart()
     {
         int weight = 0;
@@ -120,5 +122,10 @@ public class SATSolver {
     public ArrayList<Result> getResults()
     {
         return results;
+    }
+    
+    public ArrayList<Boolean> satConfig()
+    {
+        return bestSolution.getConfiguration();
     }
 }

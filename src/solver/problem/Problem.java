@@ -22,6 +22,12 @@ public class Problem {
         clauses.add(c);
     }
     
+    /**
+     * Return clauses true in proportion to all clauses.
+     * E.g. 4 clauses true, 5 in total -> 0.8.
+     * @param configuration
+     * @return 
+     */
     public double clausesTrue(ArrayList<Boolean> configuration)
     {
         int clausesTrue = 0;
@@ -33,6 +39,11 @@ public class Problem {
         return (double)clausesTrue/clauses.size();
     }
     
+    /**
+     * Are all clauses true?
+     * @param configuration
+     * @return 
+     */
     public boolean isSat(ArrayList<Boolean> configuration)
     {
         return clausesTrue(configuration) == 1;

@@ -27,6 +27,7 @@ public class Clause {
         return false;
     }
     
+    @Override
     public String toString()
     {
         String clause = "";

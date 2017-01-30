@@ -1,13 +1,13 @@
 package solver;
 
 /**
- *
+ * Secondary class for results checking.
  * @author Martin
  */
 public class Result {
 
-    private double t;
-    private double w;
+    private final double t;
+    private final double w;
     
     public Result(double t, double w)
     {

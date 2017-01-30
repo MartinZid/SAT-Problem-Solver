@@ -71,7 +71,6 @@ public class Generator {
             eof = true;
             return;
         }
-        
         try { //write line to output file
             Files.write(path, line.trim().concat("\n").getBytes(), StandardOpenOption.APPEND);
         } catch (IOException ex)
